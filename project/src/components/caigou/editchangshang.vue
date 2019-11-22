@@ -1,23 +1,38 @@
 <template>
   <div>
-    <div style="font-size:0.24rem;text-align:center;padding:0.15rem;">修改厂商信息</div>
+    <div style="font-size:0.24rem;text-align:center;padding:0.15rem;">
+      修改厂商信息
+    </div>
     <div class="card">
       <div class="item">
         <span>名称</span>&nbsp&nbsp
-        <el-input style="width:82%;" size="small" placeholder="请在此输入 (例: A公司)" v-model="data.name"></el-input>
+        <el-input
+          style="width:82%;"
+          size="small"
+          disabled=""
+          v-model="data.name"
+        ></el-input>
       </div>
-      <div class="item" style="border-bottom:1px solid #ccc;padding-bottom:0.1rem">
+      <div
+        class="item"
+        style="border-bottom:1px solid #ccc;padding-bottom:0.1rem"
+      >
         <span>编码</span>&nbsp&nbsp
         <el-input
           style="width:82%;"
           size="small"
-          placeholder="请在此输入 (例: HBC567890)"
+          disabled
           v-model="data.coding"
         ></el-input>
       </div>
       <div class="item">
         <span>验证码</span>&nbsp&nbsp
-        <el-input style="width:77%;" size="small" placeholder="请在此输入" v-model="data.code"></el-input>
+        <el-input
+          style="width:77%;"
+          size="small"
+          placeholder="请在此输入"
+          v-model="data.code"
+        ></el-input>
       </div>
       <div style="text-align:center">
         <div class="button" style="margin-top:1rem" @click="ok">确定</div>
@@ -30,10 +45,10 @@
 export default {
   mounted() {
     let a = JSON.parse(window.sessionStorage.getItem("changshang"));
-    this.data.name=a.name
-    this.data.coding=a.coding
-    this.data.code=a.code
-    this.data.id=a.id
+    this.data.name = a.name;
+    this.data.coding = a.coding;
+    this.data.code = a.code;
+    this.data.id = a.id;
   },
   data() {
     return {

@@ -9,20 +9,28 @@
       <div slot="action" @click="getlist" class="search">搜索</div>
     </van-search>
     <div class="card1">
-      <div class="box" v-for="(item,index) in table" :key="index">
-        <div>{{item.name}}</div>
-        <div>{{item.coding}}</div>
+      <div class="box" v-for="(item, index) in table" :key="index">
+        <div>{{ item.name }}</div>
+        <div>{{ item.coding }}</div>
         <div>
           <span>验证码</span>
           <span
             style="color:#e9b96a;display:inline-block;width:1.05rem;margin-left:0.05rem"
-          >{{item.code}}</span>
-          <span class="xiangqing" style="margin:0" @click="del(item.id)">删除</span>
+            >{{ item.code }}</span
+          >
+          <!-- <span class="xiangqing" style="margin:0" @click="del(item.id)"
+            >删除</span
+          > -->
           <span class="xiangqing" @click="edit(item)">修改</span>
         </div>
       </div>
     </div>
-    <div class="bottom" v-show="showBtn">
+    <div style="text-align:center">
+      <router-link to="/caigou">
+      <div class="same" style="border-radius: 0.15rem;text-align:center;margin:0.1rem">返回</div>
+    </router-link>
+    </div>
+    <!-- <div class="bottom" v-show="showBtn">
       <router-link to="/caigou">
         <div class="same" style="border-radius: 0.15rem 0 0 0.15rem;">返回</div>
       </router-link>
@@ -32,7 +40,7 @@
       <router-link to="/caigou/daoruchangshang">
         <div class="same" style="border-radius: 0 0.15rem 0.15rem 0;">导入</div>
       </router-link>
-    </div>
+    </div> -->
   </div>
 </template>
 

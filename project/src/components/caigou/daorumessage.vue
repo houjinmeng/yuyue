@@ -41,6 +41,7 @@ export default {
     };
   },
   methods: {
+    // 添加
     add(id) {
       this.data.list.push(this.list[id]);
       this.$http
@@ -70,6 +71,7 @@ export default {
           }
         });
     },
+    // 删除
     delet(index) {
       this.$dialog
         .confirm({

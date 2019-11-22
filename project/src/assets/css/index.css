@@ -95,3 +95,6 @@ a {
   z-index: 2011 !important;
   width: 3.2rem !important;
 }
+.el-input.is-disabled .el-input__inner{
+  color: #000 !important;
+}

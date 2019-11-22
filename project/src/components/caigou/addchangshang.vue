@@ -41,6 +41,7 @@ export default {
     };
   },
   methods: {
+    // 确定
     ok() {
       if (this.data.name == "") {
         this.$toast.fail("请填写厂商名称");

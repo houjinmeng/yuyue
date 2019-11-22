@@ -21,6 +21,7 @@ import zhuce from '@/components/outman/zhuce'
 import zhuceok from '@/components/outman/zhuceok'
 import zhucefail from '@/components/outman/zhucefail'
 import songhuook from "@/components/outman/songhuook"
+import message from "@/components/outman/ordermessage"
 // 采购
 import caigouindex from '@/components/caigou/index'
 import caigouhome from '@/components/caigou/home'
@@ -53,6 +54,7 @@ import adminperson from '@/components/admin/person'
 import personmessage from '@/components/admin/personmessage'
 import goodsaddress from '@/components/admin/goodsaddress'
 import adminhome from '@/components/admin/home'
+import tongbu from '@/components/admin/tongbu'
 // 门卫
 import menwei from '@/components/menwei/home'
 import yewu from '@/components/menwei/yewu'
@@ -90,6 +92,7 @@ var router = new Router({
     {path:'/zhuceok',component:zhuceok},
     {path:'/zhucefail',component:zhucefail},
     {path:'/outman/songhuook',component:songhuook},
+    {path:'/outman/ordermessage',component:message},
     // 采购
     {
       path:'/caigou',
@@ -142,6 +145,7 @@ var router = new Router({
     },
     {path:'/admin/zhucecheckin',component:zhucecheckin},
     {path:'/admin/personmessage',component:personmessage},
+    {path:'/tongbu',component:tongbu},
     // 门卫
     {path:'/menwei',component:menwei},
     {path:'/yewu',component:yewu},
