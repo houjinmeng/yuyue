@@ -104,6 +104,9 @@ export default {
 };
 </script>
 <style scoped>
+.card >>> .el-textarea{
+  margin: 0 !important
+}
 .card >>> .el-textarea.is-disabled .el-textarea__inner {
   background-color: #ffffff !important;
   border: none !important;

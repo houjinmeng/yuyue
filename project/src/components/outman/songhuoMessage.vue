@@ -264,7 +264,7 @@ export default {
       // 限制投放日期
       pickerOptions: {
         disabledDate(time) {
-          return time.getTime() < Date.now();
+          return time.getTime() <= Date.now()-24 * 60 * 60 * 1000;
         }
       },
       // 表单

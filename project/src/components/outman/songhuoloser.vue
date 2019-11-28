@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div style="font-size:0.24rem;text-align:center;padding:0.15rem 0">预约详情</div>
+    <div style="font-size:0.24rem;text-align:center;padding:0.15rem 0">
+      预约详情
+    </div>
     <div class="cards">
       <div class="top">状态信息</div>
       <div class="bot">
@@ -11,55 +13,108 @@
     <div class="cards">
       <div class="top">预约失败的原因</div>
       <div class="bot">
-        <div>提 &nbsp出 &nbsp人 &nbsp&nbsp&nbsp {{cause.audit}}</div>
+        <div>提 &nbsp出 &nbsp人 &nbsp&nbsp&nbsp {{ cause.audit }}</div>
         <div>
           拒绝原因
           <div
             style="display: inline-block;width: 2.22rem;vertical-align:top;margin:0 0 0 0.17rem;"
-          >{{cause.brief}}</div>
+          >
+            {{ cause.brief }}
+          </div>
         </div>
       </div>
     </div>
     <div class="cards">
       <div class="top">订单信息</div>
       <div class="bot">
-        <div>订 &nbsp单 &nbsp号 &nbsp&nbsp&nbsp {{order.order_coding}}</div>
-        <div>供 &nbsp货 &nbsp商 &nbsp&nbsp&nbsp {{order.name}}</div>
-        <div>物料编号 &nbsp&nbsp&nbsp {{order.material_coding}}</div>
-        <div>物料名称 &nbsp&nbsp&nbsp {{order.material_name}}</div>
-        <div>物料规格 &nbsp&nbsp&nbsp {{order.material_model}}</div>
+        <div>订 &nbsp单 &nbsp号 &nbsp&nbsp&nbsp {{ order.order_coding }}</div>
+        <div style="display:flex;align-items:top">
+          供 &nbsp货 &nbsp商 &nbsp&nbsp&nbsp
+          <el-input
+            type="textarea"
+            autosize
+            disabled=""
+            v-model="order.name"
+            style="width:70%"
+            resize="none"
+          >
+          </el-input>
+        </div>
+        <div>物料编号 &nbsp&nbsp&nbsp {{ order.material_coding }}</div>
+        <div style="display:flex;align-items:top">
+          物料名称 &nbsp&nbsp&nbsp
+          <el-input
+            type="textarea"
+            autosize
+            disabled=""
+            v-model="order.material_name"
+            style="width:70%"
+            resize="none"
+          >
+          </el-input>
+        </div>
+        <div style="display:flex;align-items:top">
+          物料规格 &nbsp&nbsp&nbsp
+          <el-input
+            type="textarea"
+            autosize
+            disabled=""
+            v-model="order.material_model"
+            style="width:70%"
+            resize="none"
+          >
+          </el-input>
+        </div>
       </div>
     </div>
     <div class="cards">
       <div class="top">送货信息</div>
       <div class="bot">
-        <div>物料数量 &nbsp&nbsp&nbsp {{list.material_number}}</div>
-        <div>托盘数量 &nbsp&nbsp&nbsp {{list.tray_number}}</div>
-        <div>需要工具 &nbsp&nbsp&nbsp {{list.need_tool}}</div>
-        <div>人员总数 &nbsp&nbsp&nbsp {{list.client_number}}</div>
-        <div>送货地点 &nbsp&nbsp&nbsp {{list.name}}</div>
-        <div>送货时间 &nbsp&nbsp&nbsp {{list.time*1000|formatDate}}</div>
-        <div v-for="(item,index) in cars" :key="index">
-          <span :class="[ index == 1 ? 'yincang' : 'xianshi' ]">车牌号码</span>
-          &nbsp&nbsp&nbsp {{item}}
+        <div>物料数量 &nbsp&nbsp&nbsp {{ list.material_number }}</div>
+        <div>托盘数量 &nbsp&nbsp&nbsp {{ list.tray_number }}</div>
+        <div>需要工具 &nbsp&nbsp&nbsp {{ list.need_tool }}</div>
+        <div>人员总数 &nbsp&nbsp&nbsp {{ list.client_number }}</div>
+        <div>送货地点 &nbsp&nbsp&nbsp {{ list.name }}</div>
+        <div>
+          送货时间 &nbsp&nbsp&nbsp {{ (list.time * 1000) | formatDate }}
         </div>
-        <div v-for="(item,index) in phones" :key="index+10">
-          <span :class="[ index == 1 ? 'yincang' : 'xianshi' ]">联系电话</span> &nbsp&nbsp&nbsp {{item}}
+        <div v-for="(item, index) in cars" :key="index">
+          <span :class="[index == 1 ? 'yincang' : 'xianshi']">车牌号码</span>
+          &nbsp&nbsp&nbsp {{ item }}
+        </div>
+        <div v-for="(item, index) in phones" :key="index + 10">
+          <span :class="[index == 1 ? 'yincang' : 'xianshi']">联系电话</span>
+          &nbsp&nbsp&nbsp {{ item }}
         </div>
       </div>
     </div>
     <div class="cards">
       <div class="top0">质检报告</div>
-      <div class="bot" style="padding-right:0">
+      <!-- <div class="bot" style="padding-right:0">
         <van-uploader v-model="fileList" multiple :max-count="0" preview-size="0.95rem" />
-      </div>
+      </div> -->
+      <a :href="item" v-for="(item, index) in fileList" :key="index">
+        <div class="yulan">质检报告{{ index + 1 }}</div>
+      </a>
     </div>
     <!-- 底部按钮 -->
-    <div class="btn" v-show="ruleid==10">
-      <div class="same" style="border-radius: 0.15rem 0 0 0.15rem;" @click="quxiao">放弃预约</div>
-      <div class="same" style="border-radius: 0 0.15rem 0.15rem 0;" @click="again">修改并再次预约</div>
+    <div class="btn" v-show="ruleid == 10">
+      <div
+        class="same"
+        style="border-radius: 0.15rem 0 0 0.15rem;"
+        @click="quxiao"
+      >
+        放弃预约
+      </div>
+      <div
+        class="same"
+        style="border-radius: 0 0.15rem 0.15rem 0;"
+        @click="again"
+      >
+        修改并再次预约
+      </div>
     </div>
-    <div style="text-align:center;margin:0.2rem 0" v-show="ruleid!=10">
+    <div style="text-align:center;margin:0.2rem 0" v-show="ruleid != 10">
       <div class="button" @click="$router.back(-1)">返回</div>
     </div>
   </div>
@@ -117,8 +172,9 @@ export default {
           this.cause = res.data.cause;
           res.data.img_list.forEach(item => {
             item.url = "http://booking.goldenbrother.cn" + item.url;
+            this.fileList.push(item.url);
           });
-          this.fileList = res.data.img_list;
+          // this.fileList = res.data.img_list;
           this.ruleform = res.data.update;
         });
     },
@@ -148,6 +204,21 @@ export default {
 };
 </script>
 <style scoped>
+.cards >>> .el-textarea.is-disabled .el-textarea__inner {
+  background-color: #ffffff !important;
+  border: none !important;
+  color: #000 !important;
+  cursor: not-allowed !important;
+  text-align: left !important;
+  font-size: 0.14rem !important;
+}
+.cards >>> .el-textarea {
+  margin: 0 !important;
+}
+.cards >>> .el-textarea__inner {
+  padding: 0 !important;
+  padding-left: 0.05rem !important;
+}
 .cards >>> .van-icon {
   visibility: hidden;
 }

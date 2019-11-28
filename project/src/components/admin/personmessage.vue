@@ -81,7 +81,8 @@ export default {
         { value: "2", label: "仓管" },
         { value: "3", label: "品质" },
         { value: "4", label: "物控" },
-        { value: "5", label: "门卫" }
+        { value: "5", label: "门卫" },
+        { value: "7", label: "其它业务部门" },
       ],
       data: {
         token: window.sessionStorage.getItem("token"),

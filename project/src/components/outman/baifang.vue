@@ -3,7 +3,9 @@
     <!-- 首次预约 -->
     <div v-if="one">
       <div class="title">欢迎使用拜访预约</div>
-      <van-cell-group style="width:70%;margin:0 auto;background-color: transparent;">
+      <van-cell-group
+        style="width:70%;margin:0 auto;background-color: transparent;"
+      >
         <van-field
           v-model="data.code"
           placeholder="请输入识别码"
@@ -16,14 +18,22 @@
           @click="checkcode"
           style="width:60%;font-size:0.16rem;background:#efbf6e;color:#fff"
           round
-        >确定</el-button>
+          >确定</el-button
+        >
       </div>
     </div>
     <!-- 再次预约 -->
     <div v-if="two">
-      <div style="font-size:0.24rem;text-align:center;padding:0.15rem 0">请输入拜访信息</div>
+      <div style="font-size:0.24rem;text-align:center;padding:0.15rem 0">
+        请输入拜访信息
+      </div>
       <div class="card">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+        <el-form
+          :model="ruleForm"
+          :rules="rules"
+          ref="ruleForm"
+          class="demo-ruleForm"
+        >
           <el-form-item prop="company">
             <div>
               <span style="font-size:0.16rem">访客公司</span>
@@ -87,8 +97,12 @@
           </el-form-item>
           <!-- 车牌号码 -->
           <el-form-item>
-            <div v-for="(item,index) in cars" :key="index">
-              <span style="font-size:0.16rem;" :class="index == 0?'xianshi':'yincang'">车牌号码</span>
+            <div v-for="(item, index) in cars" :key="index">
+              <span
+                style="font-size:0.16rem;"
+                :class="index == 0 ? 'xianshi' : 'yincang'"
+                >车牌号码</span
+              >
               <div style="position: relative;display:inline-block;width:65%">
                 <el-input
                   style="width:100%;"
@@ -98,14 +112,14 @@
                   @blur="cartest(item.value)"
                 ></el-input>
                 <img
-                  v-if="item.index==carnum"
+                  v-if="item.index == carnum"
                   src="../../assets/img/zengjia.png"
                   alt
                   style="width:0.25rem;height:0.25rem;position: absolute;top:0.08rem;right:-0.37rem"
                   @click="carnum++"
                 />
                 <img
-                  v-if="item.index!=carnum"
+                  v-if="item.index != carnum"
                   src="../../assets/img/shanchu.png"
                   alt
                   style="width:0.25rem;height:0.25rem;position: absolute;top:0.08rem;right:-0.37rem"
@@ -117,13 +131,19 @@
               <div
                 v-show="carShow"
                 style="color:red;padding-left:0.7rem;font-size:14px;line-height:0;padding-top:0.05rem"
-              >请以正确格式填写</div>
+              >
+                请以正确格式填写
+              </div>
             </transition>
           </el-form-item>
           <!-- 手机号码 -->
           <el-form-item>
-            <div v-for="(item,index) in phones" :key="index+20">
-              <span style="font-size:0.16rem;" :class="index == 0?'xianshi':'yincang'">联系电话</span>
+            <div v-for="(item, index) in phones" :key="index + 20">
+              <span
+                style="font-size:0.16rem;"
+                :class="index == 0 ? 'xianshi' : 'yincang'"
+                >联系电话</span
+              >
               <div style="position: relative;display:inline-block;width:65%">
                 <el-input
                   style="width:100%;"
@@ -135,14 +155,14 @@
                   @blur="phonetest(item.value)"
                 ></el-input>
                 <img
-                  v-if="item.index==phonenum"
+                  v-if="item.index == phonenum"
                   src="../../assets/img/zengjia.png"
                   alt
                   style="width:0.25rem;height:0.25rem;position: absolute;top:0.08rem;right:-0.37rem"
                   @click="phonenum++"
                 />
                 <img
-                  v-if="item.index!=phonenum"
+                  v-if="item.index != phonenum"
                   src="../../assets/img/shanchu.png"
                   alt
                   style="width:0.25rem;height:0.25rem;position: absolute;top:0.08rem;right:-0.37rem"
@@ -154,7 +174,9 @@
               <div
                 v-show="phoneShow"
                 style="color:red;padding-left:0.7rem;font-size:14px;line-height:0;padding-top:0.05rem"
-              >请填写正确格式的手机号</div>
+              >
+                请填写正确格式的手机号
+              </div>
             </transition>
           </el-form-item>
           <!-- 底部按钮 -->
@@ -167,7 +189,12 @@
       </div>
       <!-- 日期选择 -->
       <van-popup v-model="show" position="bottom" :style="{ height: '60%' }">
-        <van-datetime-picker v-model="time1" type="date" @confirm="time" @cancel="show=false" />
+        <van-datetime-picker
+          v-model="time1"
+          type="date"
+          @confirm="time"
+          @cancel="show = false"
+        />
       </van-popup>
     </div>
   </div>
@@ -182,7 +209,7 @@ export default {
       // 限制投放日期
       pickerOptions: {
         disabledDate(time) {
-          return time.getTime() < Date.now();
+          return time.getTime() < Date.now() - 24 * 60 * 60 * 1000;
         }
       },
       ruleForm: {
@@ -193,7 +220,8 @@ export default {
         time: "",
         cart: "",
         phone: "",
-        time1: ""
+        time1: "",
+        code_id: ""
       },
       cars: [{ value: "", index: 1 }],
       phones: [{ value: "", index: 1 }],
@@ -215,7 +243,7 @@ export default {
       phonenum: 1, //电话数量
       show: false,
       data: { token: window.sessionStorage.getItem("token"), code: "" },
-      one: false,
+      one: true,
       two: false,
       // 表单验证错误提示
       time1: "",
@@ -238,14 +266,6 @@ export default {
         this.deletphone();
       }
     }
-  },
-  mounted() {
-    // 默认日期
-    // let one = new Date();
-    // let two = this.timeChangetype(one)/1000;
-    // this.mingtian = two + 86400;
-    // this.time1 = one;
-    this.check();
   },
   methods: {
     // 车牌号验证格式
@@ -340,20 +360,6 @@ export default {
       this.ruleForm.time1 = this.formatDate(this.date);
       this.show = false;
     },
-    // 验证是否是首次预约
-    check() {
-      this.$http
-        .post("/client/check_business", this.$qs.stringify(this.data))
-        .then(res => {
-          if (res.data.code == 0) {
-            this.one = true;
-            this.two = false;
-          } else {
-            this.two = true;
-            this.one = false;
-          }
-        });
-    },
     // 验证识别码
     checkcode() {
       this.$http
@@ -361,6 +367,7 @@ export default {
         .then(res => {
           if (res.data.code == 1) {
             this.$toast.success(res.data.msg);
+            this.ruleForm.code_id = res.data.data.code_id;
             this.one = false;
             this.two = true;
           } else {

@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div class="loading" v-show="tishi">
+      <van-loading
+        type="spinner"
+        size="0.3rem"
+        :vertical="true"
+        style="margin:0.3rem 0"
+        >数据加载中...</van-loading
+      >
+    </div>
     <van-search
       v-model="data.key"
       placeholder="请输入厂商名称"
@@ -12,12 +21,16 @@
       <div class="box" v-for="(item, index) in table" :key="index">
         <div>{{ item.name }}</div>
         <div>{{ item.coding }}</div>
-        <div>
-          <span>验证码</span>
-          <span
-            style="color:#e9b96a;display:inline-block;width:1.05rem;margin-left:0.05rem"
-            >{{ item.code }}</span
-          >
+        <div
+          style="display:flex;justify-content: space-between;align-items:center"
+        >
+          <div style="margin:0">
+            <span>验证码</span>
+            <span
+              style="color:#e9b96a;display:inline-block;margin-left:0.05rem"
+              >{{ item.code }}</span
+            >
+          </div>
           <!-- <span class="xiangqing" style="margin:0" @click="del(item.id)"
             >删除</span
           > -->
@@ -27,8 +40,13 @@
     </div>
     <div style="text-align:center">
       <router-link to="/caigou">
-      <div class="same" style="border-radius: 0.15rem;text-align:center;margin:0.1rem">返回</div>
-    </router-link>
+        <div
+          class="same"
+          style="border-radius: 0.15rem;text-align:center;margin:0.1rem"
+        >
+          返回
+        </div>
+      </router-link>
     </div>
     <!-- <div class="bottom" v-show="showBtn">
       <router-link to="/caigou">
@@ -58,6 +76,7 @@ export default {
   },
   data() {
     return {
+      tishi: true,
       value: "",
       data: { token: window.sessionStorage.getItem("token"), key: "" },
       table: [],
@@ -75,6 +94,7 @@ export default {
         .post("/audit/delivery_code_list", this.$qs.stringify(this.data))
         .then(res => {
           this.table = res.data;
+          this.tishi = false;
         });
     },
     del(id) {
@@ -163,6 +183,5 @@ export default {
   color: #fff;
   background-color: #e9b96a;
   border-radius: 0.1rem;
-  margin-left: 0.1rem;
 }
 </style>

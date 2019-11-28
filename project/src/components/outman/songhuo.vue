@@ -24,6 +24,15 @@
     </div>
     <!-- 再次预约 -->
     <div v-if="two" class="bb">
+      <div class="loading" v-show="tishi">
+        <van-loading
+          type="spinner"
+          size="0.3rem"
+          :vertical="true"
+          style="margin:0.3rem 0"
+          >数据加载中...</van-loading
+        >
+      </div>
       <div class="title">欢迎使用送货预约</div>
       <div style="text-align:center;margin:0.2rem 0;font-size:0.16rem">
         请输入订单号，并准备好清晰的质检报告照片。
@@ -74,6 +83,7 @@ export default {
   },
   data() {
     return {
+      tishi: true,
       one: false,
       two: false,
       data: {
@@ -91,6 +101,7 @@ export default {
         .post("/client/order_list", this.$qs.stringify(this.data))
         .then(res => {
           this.list = res.data.msg;
+          this.tishi = false;
         });
     },
     // 验证是否是首次预约
@@ -195,7 +206,7 @@ export default {
   background-color: #fff;
   border-radius: 0.1rem;
   padding: 0.1rem;
-  margin-bottom: 0.1rem
+  margin-bottom: 0.1rem;
 }
 .item {
   display: flex;

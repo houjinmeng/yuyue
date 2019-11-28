@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div class="loading" v-show="tishi">
+      <van-loading
+        type="spinner"
+        size="0.3rem"
+        :vertical="true"
+        style="margin:0.3rem 0"
+        >数据加载中...</van-loading
+      >
+    </div>
     <div style="overflow: hidden;">
       <div class="btn" @click="tongbu">同步厂商</div>
     </div>
@@ -26,6 +35,7 @@ export default {
   },
   data() {
     return {
+      tishi: true,
       data: {
         token: window.sessionStorage.getItem("token"),
         key: ""
@@ -39,6 +49,7 @@ export default {
         .post("/audit/delivery_code_list", this.$qs.stringify(this.data))
         .then(res => {
           this.list = res.data;
+          this.tishi = false;
         });
     },
     tongbu() {

@@ -1,41 +1,83 @@
 <template>
   <div>
-    <div style="font-size:0.24rem;text-align:center;padding:0.15rem 0">审核预约</div>
+    <div style="font-size:0.24rem;text-align:center;padding:0.15rem 0">
+      审核预约
+    </div>
     <div class="cards">
       <div class="top0">订单信息</div>
       <div class="bot">
-        <div>订 &nbsp单 &nbsp号 &nbsp&nbsp&nbsp {{order.order_coding}}</div>
-        <div>供 &nbsp货 &nbsp商 &nbsp&nbsp&nbsp {{order.name}}</div>
-        <div>物料编号 &nbsp&nbsp&nbsp {{order.material_coding}}</div>
-        <div>物料名称 &nbsp&nbsp&nbsp {{order.material_name}}</div>
-        <div>物料规格 &nbsp&nbsp&nbsp {{order.material_model}}</div>
+        <div>订 &nbsp单 &nbsp号 &nbsp&nbsp&nbsp {{ order.order_coding }}</div>
+        <div style="display:flex;align-items:top">
+          供 &nbsp货 &nbsp商 &nbsp&nbsp&nbsp
+          <el-input
+            type="textarea"
+            autosize
+            disabled=""
+            v-model="order.name"
+            style="width:70%"
+            resize="none"
+          >
+          </el-input>
+        </div>
+        <div>物料编号 &nbsp&nbsp&nbsp {{ order.material_coding }}</div>
+        <div style="display:flex;align-items:top">
+          物料名称 &nbsp&nbsp&nbsp
+          <el-input
+            type="textarea"
+            autosize
+            disabled=""
+            v-model="order.material_name"
+            style="width:70%"
+            resize="none"
+          >
+          </el-input>
+        </div>
+        <div style="display:flex;align-items:top">
+          物料规格 &nbsp&nbsp&nbsp
+          <el-input
+            type="textarea"
+            autosize
+            disabled=""
+            v-model="order.material_model"
+            style="width:70%"
+            resize="none"
+          >
+          </el-input>
+        </div>
       </div>
     </div>
     <div class="cards">
       <div class="top0">送货信息</div>
       <div class="bot">
-        <div>物料数量 &nbsp&nbsp&nbsp {{goods.material_number}}</div>
-        <div>托盘数量 &nbsp&nbsp&nbsp {{goods.tray_number}}</div>
-        <div>需要工具 &nbsp&nbsp&nbsp {{goods.need_tool}}</div>
-        <div>人员总数 &nbsp&nbsp&nbsp {{goods.client_number}}</div>
-        <div>送货地点 &nbsp&nbsp&nbsp {{goods.name}}</div>
-        <div>送货时间 &nbsp&nbsp&nbsp {{goods.time*1000|formatDate}}</div>
-        <div v-for="(item,index) in cars" :key="index">
-          <span :class="index == 0?'xianshi':'yincang'">车牌号码</span>
-          &nbsp&nbsp&nbsp {{item}}
+        <div>物料数量 &nbsp&nbsp&nbsp {{ goods.material_number }}</div>
+        <div>托盘数量 &nbsp&nbsp&nbsp {{ goods.tray_number }}</div>
+        <div>需要工具 &nbsp&nbsp&nbsp {{ goods.need_tool }}</div>
+        <div>人员总数 &nbsp&nbsp&nbsp {{ goods.client_number }}</div>
+        <div>送货地点 &nbsp&nbsp&nbsp {{ goods.name }}</div>
+        <div>
+          送货时间 &nbsp&nbsp&nbsp {{ (goods.time * 1000) | formatDate }}
         </div>
-        <div v-for="(item,index) in phones" :key="index+20">
-          <span :class="index == 0?'xianshi':'yincang'">联系电话</span>
-          &nbsp&nbsp&nbsp {{item}}
+        <div v-for="(item, index) in cars" :key="index">
+          <span :class="index == 0 ? 'xianshi' : 'yincang'">车牌号码</span>
+          &nbsp&nbsp&nbsp {{ item }}
+        </div>
+        <div v-for="(item, index) in phones" :key="index + 20">
+          <span :class="index == 0 ? 'xianshi' : 'yincang'">联系电话</span>
+          &nbsp&nbsp&nbsp {{ item }}
         </div>
       </div>
     </div>
     <!-- 仓管 -->
-    <div class="cards" v-if="rule_id==2">
+    <div class="cards" v-if="rule_id == 2">
       <div class="top0">审核信息</div>
       <div class="bot" style="margin:0">
         <span>送货地点</span>&nbsp&nbsp
-        <el-select v-model="data.value" placeholder="请选择" size="small" style="width:74%">
+        <el-select
+          v-model="data.value"
+          placeholder="请选择"
+          size="small"
+          style="width:74%"
+        >
           <el-option
             v-for="item in dateOption"
             :key="item.value"
@@ -46,14 +88,17 @@
       </div>
     </div>
     <!-- 质检 -->
-    <div class="cards" v-if="rule_id==3">
+    <div class="cards" v-if="rule_id == 3">
       <div class="top0">质检报告</div>
-      <div class="bot" style="padding-right:0">
+      <!-- <div class="bot" style="padding-right:0">
         <van-uploader v-model="fileList" multiple :max-count="0" preview-size="0.95rem" />
-      </div>
+      </div> -->
+      <a :href="item" v-for="(item, index) in fileList" :key="index">
+        <div class="yulan">质检报告{{ index + 1 }}</div>
+      </a>
     </div>
     <!-- 物控 -->
-    <div class="cards" v-if="rule_id==4">
+    <div class="cards" v-if="rule_id == 4">
       <div class="top0">审核信息</div>
       <div class="bot" style="position: relative;">
         <span style="font-size:0.16rem">预约日期</span>
@@ -62,14 +107,14 @@
           size="small"
           placeholder="请选择日期"
           v-model="date"
-          @click.native="show=true"
+          @click.native="show = true"
           disabled
         ></el-input>
         <img
           src="../../assets/img/rili.png"
           alt
           style="width:0.25rem;height:0.25rem;position: absolute;top:0.12rem;right:0.16rem"
-          @click="show=true"
+          @click="show = true"
         />
       </div>
     </div>
@@ -80,15 +125,27 @@
           type="textarea"
           placeholder="请输入详细原因"
           v-model="data.brief"
-          :autosize="{minRows: 3}"
+          :autosize="{ minRows: 3 }"
         ></el-input>
       </div>
     </div>
     <!-- 底部按钮 -->
     <div class="btn">
-      <div class="same0" style="border-radius: 0.15rem 0 0 0.15rem;" @click="lahei">拉黑</div>
+      <div
+        class="same0"
+        style="border-radius: 0.15rem 0 0 0.15rem;"
+        @click="lahei"
+      >
+        拉黑
+      </div>
       <div class="same0" @click="no">拒绝预约</div>
-      <div class="same0" style="border-radius: 0 0.15rem 0.15rem 0;" @click="ok">同意预约</div>
+      <div
+        class="same0"
+        style="border-radius: 0 0.15rem 0.15rem 0;"
+        @click="ok"
+      >
+        同意预约
+      </div>
     </div>
     <!-- 日期选择 -->
     <van-popup v-model="show" position="bottom" :style="{ height: '60%' }">
@@ -96,7 +153,7 @@
         v-model="time1"
         type="datetime"
         @confirm="time"
-        @cancel="show=false"
+        @cancel="show = false"
         :show-toolbar="true"
         :min-date="minDate"
       />
@@ -156,9 +213,9 @@ export default {
           this.cars = res.data.delivery.cart.split(",");
           this.phones = res.data.delivery.phone.split(",");
           res.data.img.forEach(item => {
-            let obj = { url: "" };
-            obj.url = "http://booking.goldenbrother.cn" + item;
-            this.fileList.push(obj);
+            // let obj = { url: "" };
+            item = "http://booking.goldenbrother.cn" + item;
+            this.fileList.push(item);
           });
           if (this.rule_id == 2) {
             this.data.key = "stock_id";
@@ -191,8 +248,10 @@ export default {
       var s = date.getSeconds();
       m = m < 10 ? "0" + m : m;
       d = d < 10 ? "0" + d : d;
-      this.minDate = new Date(y, m, d);
-      this.time1 = new Date(y, m, d);
+      h = h < 10 ? "0" + h : h;
+      m1 = m1 < 10 ? "0" + m1 : m1;
+      this.minDate = new Date(y, m, d - 1, h, m1 + 1);
+      this.time1 = new Date(y, m, d - 1, h, m1 + 1);
     },
     formatDate(date) {
       date = new Date(date);
@@ -283,6 +342,21 @@ export default {
 }
 </style>
 <style scoped>
+.cards >>> .el-textarea.is-disabled .el-textarea__inner {
+  background-color: #ffffff !important;
+  border: none !important;
+  color: #000 !important;
+  cursor: not-allowed !important;
+  text-align: left !important;
+  font-size: 0.14rem !important;
+}
+.cards >>> .el-textarea {
+  margin: 0 !important;
+}
+.cards >>> .el-textarea__inner {
+  padding: 0 !important;
+  padding-left: 0.05rem !important;
+}
 .cards >>> .van-icon {
   visibility: hidden;
 }

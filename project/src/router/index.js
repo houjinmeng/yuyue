@@ -46,6 +46,8 @@ import other from '@/components/other/index'
 import othercheck from '@/components/other/check'
 import gocheck from '@/components/other/gocheck'
 import otherhome from '@/components/other/home'
+
+import others from '@/components/other/home1'
 // 管理员
 import admin from '@/components/admin/index'
 import zhucecheck from '@/components/admin/zhuceCheck'
@@ -149,7 +151,9 @@ var router = new Router({
     // 门卫
     {path:'/menwei',component:menwei},
     {path:'/yewu',component:yewu},
-    {path:'/huowu',component:huowu}
+    {path:'/huowu',component:huowu},
+    // 其他人员
+    {path:'/others',component:others}
   ]
 })
 // 在守卫中对token进行监听，有token就让执行，否则跳转到登录页去

@@ -3,66 +3,77 @@
     <!-- <div style="font-size:0.24rem;text-align:center;padding:0.15rem 0">我的预约</div> -->
     <van-tabs v-model="active">
       <van-tab title="拜访预约">
-        <div class="cards6" v-for="(item,index) in data1" :key="index">
+        <div class="loading" v-show="tishi">
+          <van-loading
+            type="spinner"
+            size="0.3rem"
+            :vertical="true"
+            style="margin:0.3rem 0"
+            >数据加载中...</van-loading
+          >
+        </div>
+        <div class="cards6" v-for="(item, index) in data1" :key="index">
           <div class="top1">业务会面预约</div>
           <div class="bot">
             <div>
               <span>时&nbsp &nbsp间</span>
               &nbsp&nbsp&nbsp
-              {{item.time*1000|formatDate}}
+              {{ (item.time * 1000) | formatDate }}
             </div>
             <div>
               <span>接待人</span>
               &nbsp&nbsp&nbsp
-              {{item.audit_name}}
+              {{ item.audit_name }}
             </div>
             <div>
               <span>状&nbsp &nbsp态</span>
               &nbsp&nbsp&nbsp
-              {{item.status}}
+              {{ item.status }}
             </div>
             <div style="margin-top:0.2rem;text-align:center;">
               <el-button
                 size="small"
                 style="width:60%;font-size:0.16rem;background:#efbf6e;color:#fff;border-radius:none"
                 round
-                @click="yewu2(item.id,item.status)"
-              >查看详情</el-button>
+                @click="yewu2(item.id, item.status)"
+                >查看详情</el-button
+              >
             </div>
           </div>
         </div>
       </van-tab>
       <van-tab title="送货预约">
-        <div class="cards6" v-for="(item,index) in data2" :key="index+30">
+        <div class="cards6" v-for="(item, index) in data2" :key="index + 30">
           <div class="top1">送货预约</div>
           <div class="bot">
             <div>
               <span>时&nbsp &nbsp间</span>
               &nbsp&nbsp&nbsp
-              {{item.time*1000|formatDate}}
+              {{ (item.time * 1000) | formatDate }}
             </div>
             <div>
               <span>订单号</span>
               &nbsp&nbsp&nbsp
-              {{item.order_coding}}
+              {{ item.order_coding }}
             </div>
             <div>
               <span>送货点</span>
               &nbsp&nbsp&nbsp
-              {{item.name}}
+              {{ item.name }}
             </div>
             <div>
               <span>状&nbsp &nbsp态</span>
               &nbsp&nbsp&nbsp
-              {{item.status}}
+              {{ item.status }}
             </div>
             <div style="margin-top:0.2rem;text-align:center;">
               <el-button
                 size="small"
                 style="width:60%;font-size:0.16rem;background:#efbf6e;color:#fff;border-radius:none"
                 round
-                @click="goods(item.id,item.status)"
-              >查看详情</el-button>
+                @click="goods(item.id, item.status)"
+                >查看详情</el-button
+              >
             </div>
           </div>
         </div>
@@ -87,6 +98,7 @@ export default {
   },
   data() {
     return {
+      tishi: true,
       active: 0,
       data: { token: window.sessionStorage.getItem("token") },
       data1: [],
@@ -107,6 +119,7 @@ export default {
             }
           });
           this.data1 = res.data;
+          this.tishi = false;
         });
     },
     // 送货预约列表
@@ -130,9 +143,9 @@ export default {
           this.data2 = res.data;
         });
     },
-    yewu2(id,st) {
+    yewu2(id, st) {
       window.sessionStorage.setItem("yewuid", id);
-      window.sessionStorage.setItem("yewust",st)
+      window.sessionStorage.setItem("yewust", st);
       this.$router.push("/outman/yewumessage");
     },
     goods(id, status) {

@@ -24,7 +24,7 @@ export default {};
   position: fixed;
   height: 100%;
   background: url("../../assets/img/shouye-yun.jpg") top left no-repeat;
-  background-size: 100%;
+  background-size: cover;
   overflow: hidden;
   text-align: center;
 }

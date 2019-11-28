@@ -1,17 +1,39 @@
 <template>
   <div id="img">
     <div class="loading" v-show="tishi">
-      <van-loading size="0.3rem" color="#1989fa" :vertical="true" style="margin:2rem 0">正在上传...</van-loading>
+      <van-loading
+        type="spinner"
+        size="0.3rem"
+        :vertical="true"
+        style="margin:0.3rem 0"
+        >正在上传...</van-loading
+      >
     </div>
-    <div style="font-size:0.24rem;text-align:center;padding:0.15rem 0">第三步: 上传质检报告</div>
+    <div style="font-size:0.24rem;text-align:center;padding:0.15rem 0">
+      第三步: 上传质检报告
+    </div>
     <div class="card">
       <van-uploader
+        v-model="fileList"
+        :after-read="upLoaderImg"
+        accept="*"
+        :preview-image="false"
+      >
+        <van-button icon="photo" type="primary">上传文件</van-button>
+      </van-uploader>
+      <a :href="item" v-for="(item, index) in files" :key="index">
+        <div class="yulan">质检报告{{ index + 1 }}</div>
+      </a>
+
+      <!-- <van-uploader
         v-model="fileList"
         :max-count="20"
         preview-size="1rem"
         :before-read="beforeRead"
-      ></van-uploader>
-      <div style="font-size:0.12rem;color:red">(图片预览时右上角可删除,确认无误后点击下方按钮上传)</div>
+      ></van-uploader> -->
+      <!-- <div style="font-size:0.12rem;color:red">
+        (图片预览时右上角可删除,确认无误后点击下方按钮上传)
+      </div> -->
       <!-- 底部按钮 -->
       <div class="btn">
         <el-button
@@ -20,15 +42,23 @@
           size="small"
           :disabled="showbtn"
           @click="back"
-        >上一步</el-button>
-        <el-button @click="upLoaderImg" type="warning" size="small" :disabled="showbtn">上传图片</el-button>
+          >上一步</el-button
+        >
+        <!-- <el-button
+          @click="upLoaderImg"
+          type="warning"
+          size="small"
+          :disabled="showbtn"
+          >上传图片</el-button
+        > -->
         <el-button
           type="warning"
           style="border-radius: 0 0.15rem 0.15rem 0;"
           @click="wancheng"
           size="small"
           :disabled="btnshow"
-        >完 成</el-button>
+          >完 成</el-button
+        >
       </div>
     </div>
   </div>
@@ -38,6 +68,15 @@
 export default {
   mounted() {
     this.ruleform = JSON.parse(window.sessionStorage.getItem("ruleform"));
+    let file = JSON.parse(window.sessionStorage.getItem("files"));
+    if (file != null) {
+      this.files = file;
+      this.btnshow = false;
+    }
+    let imgId = JSON.parse(window.sessionStorage.getItem("imgId"));
+    if (imgId != null) {
+      this.obj.img_ids = imgId.join(",");
+    }
     let c = JSON.parse(window.sessionStorage.getItem("order"));
     if (c != null) {
       this.obj.order_id = c.id;
@@ -54,7 +93,7 @@ export default {
       });
       this.fileList = b.img_list;
       this.obj.order_id = b.order_id;
-      this.obj.erp = b.order_id;
+      this.obj.erp = b.erp;
     }
   },
   data() {
@@ -67,9 +106,11 @@ export default {
       ruleform: {},
       // 图片列表
       fileList: [],
+      files: [],
       img: "",
       obj: {
         token: window.sessionStorage.getItem("token"),
+        //token: "bquex3wtn1",
         img_ids: "",
         order_id: "",
         erp: ""
@@ -111,6 +152,15 @@ export default {
                 this.showbtn = true;
                 res.data.data.forEach(item => {
                   this.imgid.push(item.id);
+                  this.files.push("http://booking.goldenbrother.cn" + item.url);
+                  window.sessionStorage.setItem(
+                    "files",
+                    JSON.stringify(this.files)
+                  );
+                  window.sessionStorage.setItem(
+                    "imgId",
+                    JSON.stringify(this.imgid)
+                  );
                 });
               } else {
                 //否则 Toast 提示
@@ -168,22 +218,16 @@ export default {
   }
 };
 </script>
-<style lang="">
-.loading {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  z-index: 1000;
-}
-.van-loading__text {
-  font-size: 0.2rem !important;
-  color: #fff !important;
-}
-</style>
 <style scoped>
+.yulan {
+  font-size: 0.14rem;
+  padding: 0.1rem;
+  border: 1px solid #e0b166;
+  width: 0.85rem;
+  margin-top: 0.1rem;
+  border-radius: 0.1rem;
+  text-align: center;
+}
 .btn >>> .el-button {
   padding: 0 !important;
   margin: 0 !important;

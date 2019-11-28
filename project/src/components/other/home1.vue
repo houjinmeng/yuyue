@@ -6,13 +6,14 @@
     >
       您的系统权限是:
     </div>
-    <div style="text-align:center;font-size:0.3rem;color:#dfb065">管理员</div>
+    <div style="text-align:center;font-size:0.3rem;color:#dfb065">其他业务部门</div>
     <router-link to="/caigou/yuyuenumber">
-    <div
-      style="width:1rem;text-align:center;background:#dfb065;color:#fff;padding:0.05rem 0.1rem;border-radius:0.2rem;margin:0.2rem auto"
+      <div
+        style="width:1rem;text-align:center;background:#dfb065;color:#fff;padding:0.05rem 0.1rem;border-radius:0.2rem;margin:0.2rem auto"
+      >
+        可预约号码
+      </div></router-link
     >
-      可预约号码
-    </div></router-link>
   </div>
 </template>
 

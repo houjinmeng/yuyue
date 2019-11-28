@@ -2,7 +2,9 @@
   <div>
     <div class="app">
       <div class="top_title">欢迎使用预约系统</div>
-      <div style="text-align:center;font-size:0.3rem;color:#656565">Welcome</div>
+      <div style="text-align:center;font-size:0.3rem;color:#656565">
+        Welcome
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +47,8 @@ export default {
                     this.$router.push("/caigou");
                   } else if (res.data.rule_id == 6) {
                     this.$router.push("/admin");
+                  } else if (res.data.rule_id == 7) {
+                    this.$router.push("/others");
                   } else {
                     this.$router.push("/other");
                   }
@@ -110,7 +114,7 @@ export default {
   position: fixed;
   height: 100%;
   background: url("../../assets/img/shouye-yun.jpg") top left no-repeat;
-  background-size: 100%;
+  background-size: cover;
   overflow: hidden;
 }
 </style>
